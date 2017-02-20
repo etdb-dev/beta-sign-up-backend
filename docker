@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if [[ "${1}" = "build" ]]; then
+    echo "==> Building etdb-beta-sign-up-backend"
+    docker build --no-cache -t backend .
+elif [[ "${1}" = "run" ]]; then
+    echo "==> Running etdb-beta-sign-up-backend"
+    DB_PATH="$(pwd)/db"
+    docker run -p 5000:5000 -v ${DB_PATH}:/app/db backend
+fi

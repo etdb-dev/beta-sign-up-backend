@@ -4,14 +4,17 @@ from app import app
 from flask import request
 
 @app.route('/', methods=['GET'])
-@app.route('/index')
+@app.route('/api/v1/signup', methods=['GET'])
 def index():
     # get information from request
     ip = request.environ['REMOTE_ADDR']
+
+    #NOTE: only for debugging in docker
+    print(request.args)
     mail = request.args.get('mail')
     if mail:
         # open database
-        db = sqlite3.Connection('./user.db')
+        db = sqlite3.Connection('./db/user.db')
         
         # get database cursor
         cursor = db.cursor()
@@ -41,4 +44,5 @@ def index():
         cursor.close()
         db.commit()
         db.close()
-    return "OK"
+        return "1"
+    return "0"
